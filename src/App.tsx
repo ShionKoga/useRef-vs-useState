@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import SearchWords from './SearchWords'
+import { WordInputs } from './WordInputs'
+import { WordInputs2 } from './WordInputs2'
 
-function App() {
+export const App = () => {
+
+  const [searchWords, setSearchWords] = useState<SearchWords>({a:'', b:'', c:''})
+  const [searchWords2, setSearchWords2] = useState<SearchWords>({a:'', b:'', c:''})
+
+  const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    return event.preventDefault()
+  }
+
+  const didChangeInputs = (newWords: SearchWords) => {
+    setSearchWords(newWords)
+  }
+
+  const didChangeInputs2 = (newWords: SearchWords) => {
+    setSearchWords2(newWords)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={onSearch}>
+      <p>inputs: {searchWords.a} / {searchWords.b} / {searchWords.c}</p>
+      <WordInputs didChangeInputs={didChangeInputs} />
+
+      <p>inputs: {searchWords2.a} / {searchWords2.b} / {searchWords2.c}</p>
+      <WordInputs2 didChangeInputs={didChangeInputs2} />
+
+      <button>検索</button>
+    </form>
   );
 }
-
-export default App;
